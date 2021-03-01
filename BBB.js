@@ -58,7 +58,7 @@ http-response https:\/\/bububao\.duoshoutuan\.com\/user\/* script-path=https://r
 const $ = Env("步步宝");
 $.idx = ($.idx = ($.getval('bububaoSuffix') || '1') - 1) > 0 ? ($.idx + 1 + '') : ''; // 账号扩展字符
 const notify = $.isNode() ? require("./sendNotify") : ``;
-const COOKIE = $.isNode() ? require("./bububaoCOOKIE") : ``;
+const COOKIE = $.isNode() ? require("./bbbCOOKIE") : ``;
 const logs = 0; // 0为关闭日志，1为开启
 const notifyttt = 1 // 0为关闭外部推送，1为12 23 点外部推送
 const notifyInterval = 2; // 0为关闭通知，1为所有通知，2为12 23 点通知  ， 3为 6 12 18 23 点通知 
@@ -103,7 +103,7 @@ if (!COOKIE.bububaotokenVal) {
         bububaotokenArr.push($.getdata("bububaotoken"));
         // 根据boxjs中设置的额外账号数，添加存在的账号数据进行任务处理
         if ("bububaoCASH") {
-            CASH = $.getval("bububaoCASH") || '0';
+            CASH = $.getval("bbbCASH") || '0';
         }
         let bububaoCount = ($.getval('bububaoCount') || '1') - 0;
         for (let i = 2; i <= bububaoCount; i++) {
