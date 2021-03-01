@@ -55,87 +55,17 @@ http-response https:\/\/bububao\.duoshoutuan\.com\/user\/* script-path=https://r
 步步宝获取TOKEN = type=http-response,pattern=https:\/\/bububao\.duoshoutuan\.com\/user\/*,script-path=https://raw.githubusercontent.com/ziye66666/JavaScript/main/Task/bububao.js
 */
 
-const $ = Env("步步宝");
-$.idx = ($.idx = ($.getval('bububaoSuffix') || '1') - 1) > 0 ? ($.idx + 1 + '') : ''; // 账号扩展字符
-const notify = $.isNode() ? require("./sendNotify") : ``;
-const COOKIE = $.isNode() ? require("./bbbCOOKIE") : ``;
-const logs = 0; // 0为关闭日志，1为开启
-const notifyttt = 1 // 0为关闭外部推送，1为12 23 点外部推送
-const notifyInterval = 2; // 0为关闭通知，1为所有通知，2为12 23 点通知  ， 3为 6 12 18 23 点通知 
-$.message = '', COOKIES_SPLIT = '', CASH = '', ddtime = '';
-const bububaotokenArr = [];
-let bububaotokenVal = ``;
-let middlebububaoTOKEN = [];
+const $ = new Env('步步寶')
+let notice = ''
+//let CookieVal = $.getdata('bbb_ck')
+
+let CookieVal = process.env.BBBCK
+
 if ($.isNode()) {
-    // 没有设置 FL_DHCASH 则默认为 0 不兑换
-    CASH = process.env.BBB_CASH || 0;
-}
-if ($.isNode() && process.env.BBB_bububaoTOKEN) {
-    COOKIES_SPLIT = process.env.COOKIES_SPLIT || "\n";
-    console.log(
-        `============ cookies分隔符为：${JSON.stringify(
-      COOKIES_SPLIT
-    )} =============\n`
-    );
-    if (
-        process.env.BBB_bububaoTOKEN &&
-        process.env.BBB_bububaoTOKEN.indexOf(COOKIES_SPLIT) > -1
-    ) {
-        middlebububaoTOKEN = process.env.BBB_bububaoTOKEN.split(COOKIES_SPLIT);
-    } else {
-        middlebububaoTOKEN = process.env.BBB_bububaoTOKEN.split();
-    }
-}
-if (COOKIE.bububaotokenVal) {
-    BBB_COOKIES = {
-        "bububaotokenVal": COOKIE.bububaotokenVal.split('\n'),
-    }
-    Length = BBB_COOKIES.bububaotokenVal.length;
-}
-if (!COOKIE.bububaotokenVal) {
-    if ($.isNode()) {
-        Object.keys(middlebububaoTOKEN).forEach((item) => {
-            if (middlebububaoTOKEN[item]) {
-                bububaotokenArr.push(middlebububaoTOKEN[item]);
-            }
-        });
-    } else {
-        bububaotokenArr.push($.getdata("bububaotoken"));
-        // 根据boxjs中设置的额外账号数，添加存在的账号数据进行任务处理
-        if ("bububaoCASH") {
-            CASH = $.getval("bbbCASH") || '0';
-        }
-        let bububaoCount = ($.getval('bububaoCount') || '1') - 0;
-        for (let i = 2; i <= bububaoCount; i++) {
-            if ($.getdata(`bububaotoken${i}`)) {
-                bububaotokenArr.push($.getdata(`bububaotoken${i}`));
-            }
-        }
-    }
-    if (bububaotokenArr == '') {
-        Length = 0
-    } else Length = bububaotokenArr.length
+      console.log(`============ 脚本执行-国际标准时间(UTC)：${new Date().toLocaleString()}  =============\n`)
+      console.log(`============ 脚本执行-北京时间(UTC+8)：${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()}  =============\n`)
 }
 
-function GetCookie() {
-    if ($request && $request.url.indexOf("login") >= 0) {
-        modifiedHeaders = $request.headers;
-        modifiedHeaders['imei'] = udid()
-        console.log(JSON.stringify(modifiedHeaders));
-        $done({
-            headers: modifiedHeaders
-        });
-    }
-    if ($request && $request.url.indexOf("profile") >= 0) {
-        const bububaotokenVal = $request.headers.tokenstr;
-        if (bububaotokenVal) $.setdata(bububaotokenVal, "bububaotoken" + $.idx);
-        $.log(
-            `[${$.name + $.idx}] 获取bububaotokenVal✅: 成功,bububaotokenVal: ${bububaotokenVal}`
-        );
-        $.msg($.name + $.idx, `获取bububaotokenVal: 成功🎉`, ``);
-    }
-}
-console.log(
     `================== 脚本执行 - 北京时间(UTC+8)：${new Date(
     new Date().getTime() +
     new Date().getTimezoneOffset() * 60 * 1000 +
